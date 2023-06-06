@@ -19,19 +19,7 @@ export const createRecipe = async (req, res) => {
   } catch (err) {
     res.json(err);
   }
-};
-
-export const updateRecipe = async (req, res) => {
-  try {
-    const recipe = await recipeModel.findById(req.body.recipeID);
-    const user = await userModel.findById(req.body.userID);
-    user.savedRecipes.push(recipe);
-    user.save();
-    res.status(200).json({ savedRecipes: user.savedRecipes });
-  } catch (err) {
-    res.json(err);
-  }
-};
+}; 
 
 export const removeSavedRecipe = async (req, res) => {
   try {
@@ -44,6 +32,18 @@ export const removeSavedRecipe = async (req, res) => {
     } else {
       res.status(404).json({ message: "Recipe not found in saved recipes!!!" });
     }
+  } catch (err) {
+    res.json(err);
+  }
+};
+
+export const updateSavedRecipe = async (req, res) => {
+  try {
+    const recipe = await recipeModel.findById(req.body.recipeID);
+    const user = await userModel.findById(req.body.userID);
+    user.savedRecipes.push(recipe);
+    user.save();
+    res.status(200).json({ savedRecipes: user.savedRecipes });
   } catch (err) {
     res.json(err);
   }
